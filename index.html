@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>AngularJS • TodoMVC</title>
+		<link rel="stylesheet" href="./css/base.css">
+		<link rel="stylesheet" href="./css/index.css">
+	</head>
+	<body ng-app="app" ng-controller="todo">
+		<section id="todoapp">
+			<header id="header">
+				<h1>todos</h1>
+				<form id="todo-form">
+					<input id="new-todo" placeholder="What needs to be done?" autofocus ng-model="val" ng-keydown="addFn($event)">
+				</form>
+			</header>
+			<section id="main">
+				<input type="checkbox" id="toggle-all" ng-model="status" ng-click="changeStatus()">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul id="todo-list">
+					<li ng-repeat="item in arr | filter:{status:msg}" ng-class="{'completed':item.status,'editing':item.isEditing}">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="item.status" ng-click="completeFn()">
+							<label ng-dblclick="dbEditFn($index)" ng-bind="item.name"></label>
+							<button class="destroy" ng-click="deleteFn($index)"></button>
+						</div>
+						<form>
+							<input class="edit" ng-blur="blurFn(item)" ng-model="item.name" my-auto-focus>
+						</form>
+					</li>
+				</ul>
+			</section>
+			<footer id="footer">
+				<span id="todo-count">
+					<strong>{{ leftStatus() }}</strong>&nbsp;items left
+				</span>
+				<ul id="filters">
+					<li>
+						<a href="javascript:;" ng-click="filterTask('All')" ng-class="{'selected':isTrue=='All'}">All</a>
+					</li>
+					<li>
+						<a href="javascript:;" ng-click="filterTask('Active')" ng-class="{'selected':isTrue=='Active'}">Active</a>
+					</li>
+					<li>
+						<a href="javascript:;" ng-click="filterTask('Completed')" ng-class="{'selected':isTrue=='Completed'}">Completed</a>
+					</li>
+				</ul>
+				<button id="clear-completed" ng-click="clearInfo()">Clear completed</button>
+			</footer>
+		</section>
+	</body>
+	<script src="./angular/angular.min.js"></script>
+	<script src="./js/index.js"></script>
+</html>
